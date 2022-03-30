@@ -8,7 +8,6 @@
 <script>
 import TodoList from "../components/Todos";
 import AddTodo from "../components/AddTodo.vue";
-import axios from "axios";
 
 export default {
   name: "HomeView",
@@ -18,27 +17,21 @@ export default {
   },
   methods: {
     deleteItem(id) {
-      axios
-        .delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
-        .then(() => (this.todos = this.todos.filter((t) => t.id !== id)))
-        .catch((err) => console.log(err));
+      this.$store.dispatch("DELETE_TODO", id);
     },
     addItem(todoItem) {
-      axios
-        .post("https://jsonplaceholder.typicode.com/todos", { ...todoItem })
-        .then((res) => {
-          this.todos = [...this.todos, res.data];
-        })
-        .catch((err) => console.log(err));
+      this.$store.dispatch("ADD_TODO", todoItem);
+    },
+  },
+  watch: {
+    "$store.state.todos": function () {
+      console.log(this.$store.state.todos);
+      this.todos = this.$store.state.todos;
     },
   },
   created() {
-    axios
-      .get("https://jsonplaceholder.typicode.com/todos?_limit=5")
-      .then((res) => {
-        this.todos = res.data;
-      })
-      .catch((err) => console.log(err));
+    this.$store.dispatch("FETCH_TODOS");
+    this.todos = this.$store.state.todos;
   },
   data() {
     return {
