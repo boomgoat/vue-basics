@@ -1,21 +1,17 @@
-import Vue from "vue";
-import Vuex from "vuex";
 import axios from "axios";
 
-Vue.use(Vuex);
-
-export const store = new Vuex.Store({
-  state: {
-    todos: [],
-  },
+export const todos = {
+  state: () => ({
+    todoList: [],
+  }),
   getters: {
     getTodos(state) {
-      return state.todos;
+      return state.todoList;
     },
   },
   mutations: {
     todosUpdated(state, payload) {
-      state.todos = payload;
+      state.todoList = payload;
     },
   },
   actions: {
@@ -34,7 +30,7 @@ export const store = new Vuex.Store({
         await axios.delete(
           `https://jsonplaceholder.typicode.com/todos/${todoId}`
         );
-        const updatedList = state.todos.filter((todo) => todo.id !== todoId);
+        const updatedList = state.todoList.filter((todo) => todo.id !== todoId);
         commit("todosUpdated", updatedList);
       } catch (error) {
         console.error(error);
@@ -46,10 +42,10 @@ export const store = new Vuex.Store({
           "https://jsonplaceholder.typicode.com/todos",
           { ...todo }
         );
-        commit("todosUpdated", [...state.todos, response.data]);
+        commit("todosUpdated", [...state.todoList, response.data]);
       } catch (error) {
         console.error(error);
       }
     },
   },
-});
+};

@@ -7,7 +7,7 @@
         :class="[todo.completed && isHidden ? 'completed' : '']"
       />
     </div>
-    <button class="btn" @click="toggleCompleted">Toggle Done</button>
+    <button class="btn-custom" @click="toggleCompleted">Toggle Done</button>
   </div>
 </template>
 

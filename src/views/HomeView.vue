@@ -24,14 +24,14 @@ export default {
     },
   },
   watch: {
-    "$store.state.todos": function () {
-      console.log(this.$store.state.todos);
-      this.todos = this.$store.state.todos;
+    "$store.state.todos.todoList": function () {
+      console.log(this.$store.state.todos.todoList);
+      this.todos = this.$store.state.todos.todoList;
     },
   },
   created() {
     this.$store.dispatch("fetchTodos");
-    this.todos = this.$store.state.todos;
+    this.todos = this.$store.state.todos.todoList;
   },
   data() {
     return {
@@ -59,7 +59,7 @@ body {
   padding: 10em;
 }
 
-.btn {
+.btn-custom {
   display: inline-block;
   border: none;
   border-radius: 6px;
