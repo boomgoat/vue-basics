@@ -1,7 +1,7 @@
 <template>
   <div class="home-view">
-    <AddTodo v-on:add-todo="addItem" />
-    <TodoList :todos="todos" @del-todo="deleteItem" />
+    <add-todo v-on:add-todo="addItem" />
+    <todo-list :todos="todos" @del-todo="deleteItem" />
   </div>
 </template>
 
@@ -17,10 +17,10 @@ export default {
   },
   methods: {
     deleteItem(id) {
-      this.$store.dispatch("DELETE_TODO", id);
+      this.$store.dispatch("deleteTodo", id);
     },
     addItem(todoItem) {
-      this.$store.dispatch("ADD_TODO", todoItem);
+      this.$store.dispatch("addTodo", todoItem);
     },
   },
   watch: {
@@ -30,7 +30,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("FETCH_TODOS");
+    this.$store.dispatch("fetchTodos");
     this.todos = this.$store.state.todos;
   },
   data() {

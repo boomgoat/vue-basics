@@ -9,40 +9,47 @@ export const store = new Vuex.Store({
     todos: [],
   },
   getters: {
-    GET_TODOS(state) {
+    getTodos(state) {
       return state.todos;
     },
   },
   mutations: {
-    TODOS_UPDATED(state, payload) {
+    todosUpdated(state, payload) {
       state.todos = payload;
     },
   },
   actions: {
-    FETCH_TODOS({ commit }) {
-      axios
-        .get("https://jsonplaceholder.typicode.com/todos?_limit=5")
-        .then((res) => {
-          commit("TODOS_UPDATED", res.data);
-        })
-        .catch((err) => console.log(err));
+    async fetchTodos({ commit }) {
+      try {
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/todos?_limit=5"
+        );
+        commit("todosUpdated", response.data);
+      } catch (error) {
+        console.error(error);
+      }
     },
-    DELETE_TODO({ commit, state }, todoId) {
-      axios
-        .delete(`https://jsonplaceholder.typicode.com/todos/${todoId}`)
-        .then(() => {
-          const updatedList = state.todos.filter((todo) => todo.id !== todoId);
-          commit("TODOS_UPDATED", updatedList);
-        })
-        .catch((err) => console.log(err));
+    async deleteTodo({ commit, state }, todoId) {
+      try {
+        await axios.delete(
+          `https://jsonplaceholder.typicode.com/todos/${todoId}`
+        );
+        const updatedList = state.todos.filter((todo) => todo.id !== todoId);
+        commit("todosUpdated", updatedList);
+      } catch (error) {
+        console.error(error);
+      }
     },
-    ADD_TODO({ commit, state }, todo) {
-      axios
-        .post("https://jsonplaceholder.typicode.com/todos", { ...todo })
-        .then((res) => {
-          commit("TODOS_UPDATED", [...state.todos, res.data]);
-        })
-        .catch((err) => console.log(err));
+    async addTodo({ commit, state }, todo) {
+      try {
+        const response = await axios.post(
+          "https://jsonplaceholder.typicode.com/todos",
+          { ...todo }
+        );
+        commit("todosUpdated", [...state.todos, response.data]);
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 });

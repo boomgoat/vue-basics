@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit="addTodo">
+    <form @submit.prevent="addTodo">
       <input type="text" v-model="title" name="title" placeholder="Add todo" />
       <input type="submit" value="Submit" class="btn" />
     </form>
@@ -9,16 +9,14 @@
 
 <script>
 export default {
-  name: "AddTodo",
+  name: "add-todo",
   data() {
     return {
       title: "",
     };
   },
   methods: {
-    addTodo(e) {
-      e.preventDefault();
-
+    addTodo() {
       const newTodo = {
         title: this.title,
         completed: false,

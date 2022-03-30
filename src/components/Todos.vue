@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="todo in todos" :key="todo.id">
-      <TodoItem
+      <todo-item
         :todo="todo"
         @del-todo="$emit('del-todo', todo.id)"
         :class="[todo.completed && isHidden ? 'completed' : '']"
