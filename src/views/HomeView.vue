@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home-view">
     <AddTodo v-on:add-todo="addItem" />
     <TodoList :todos="todos" @del-todo="deleteItem" />
   </div>
@@ -53,12 +53,20 @@ body {
   line-height: 1.4;
 }
 
+.home-view {
+  display: flex;
+  flex-direction: column;
+  padding: 10em;
+}
+
 .btn {
   display: inline-block;
   border: none;
+  border-radius: 6px;
   background: #555;
   color: #fff;
   padding: 7px 20px;
+  margin: 7px;
   cursor: pointer;
 }
 </style>

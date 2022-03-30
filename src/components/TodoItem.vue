@@ -34,6 +34,8 @@ export default {
   background: #f4f4f4;
   padding: 10px;
   border-bottom: 1px #ccc dotted;
+  border-radius: 6px;
+  margin: 1em 0 1em 0;
 }
 
 .is-complete {
