@@ -1,6 +1,8 @@
 <template>
   <div>
     <h1>User Profile for {{ user.name }}</h1>
+    <div class="row">comments</div>
+    <div class="row">albums</div>
   </div>
 </template>
 

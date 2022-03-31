@@ -1,12 +1,17 @@
 <template>
   <div
-    class="user-table-container d-flex flex-column align-items-start justify-content-around"
+    class="user-table-container shadow rounded m-3 p-4 pt-0 d-flex flex-column align-items-start justify-content-around"
   >
     <h3>User Listing</h3>
+    <b-form-input
+      type="text"
+      placeholder="Search Users By Name"
+      v-model="searchText"
+    ></b-form-input>
     <b-table
       striped
       hover
-      class="shadow rounded hover"
+      class="hover"
       :items="users"
       :fields="fields"
       id="user-table"
@@ -31,6 +36,7 @@ export default {
   name: "UsersView",
   data() {
     return {
+      searchText: "",
       perPage: 5,
       currentPage: 1,
       users: [],
@@ -48,10 +54,21 @@ export default {
     handleRowClick(user) {
       router.push(`users/${user.id}`);
     },
+    // searchUsers() {
+    //   this.users = this.$store.state.users.usersList.filter((user) => {
+    //     return user.name.toLowerCase().includes(this.searchText.toLowerCase());
+    //   });
+    //   console.log("called");
+    // },
   },
   watch: {
     "$store.state.users.usersList": function () {
       this.users = this.$store.state.users.usersList;
+    },
+    searchText: function () {
+      this.users = this.$store.state.users.usersList.filter((user) => {
+        return user.name.toLowerCase().includes(this.searchText.toLowerCase());
+      });
     },
   },
   created() {
@@ -68,7 +85,6 @@ export default {
 
 <style scoped>
 .user-table-container {
-  padding: 4em;
   height: 80vh;
 }
 
