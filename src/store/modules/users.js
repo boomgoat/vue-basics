@@ -18,7 +18,7 @@ export const users = {
     async fetchUsers({ commit }) {
       try {
         const response = await axios.get(
-          "https://jsonplaceholder.typicode.com/users?_limit=5"
+          "https://jsonplaceholder.typicode.com/users"
         );
         commit("usersUpdated", response.data);
       } catch (error) {
