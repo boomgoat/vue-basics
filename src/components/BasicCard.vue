@@ -10,7 +10,9 @@
       {{ cardContent }}
     </b-card-text>
 
-    <b-button href="#" variant="primary">{{ buttonContent }}</b-button>
+    <b-button @click="$emit('button-click')" variant="primary">{{
+      buttonContent
+    }}</b-button>
   </b-card>
 </template>
 

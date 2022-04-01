@@ -59,7 +59,7 @@ export default {
 <style scoped>
 .album-container {
   scroll-behavior: smooth;
-  height: 25em;
+  min-height: 25em;
 }
 .album-container::-webkit-scrollbar {
   display: none;

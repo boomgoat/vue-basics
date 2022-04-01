@@ -1,10 +1,9 @@
 <template>
-  <div class="container">
-    <h1 class="pt-4 pb-4">User Profile for {{ user.name }}</h1>
+  <div class="container p-5">
     <user-albums :user-id="userId" />
     <div class="row">
-      <user-posts :user-id="userId" />
-      <user-comments />
+      <user-posts :user-id="userId" @button-click="updatePostId" />
+      <user-comments :user-email="user.email" :post-id="postId" :key="postId" />
     </div>
   </div>
 </template>
@@ -19,14 +18,23 @@ export default {
   data() {
     return {
       userId: this.$route.params.id,
-      user: {},
+      postId: null,
+      user: {
+        name: "",
+        email: "",
+      },
     };
+  },
+  methods: {
+    updatePostId(updatedPostId) {
+      this.postId = updatedPostId;
+    },
   },
   mounted() {
     this.user = this.$store.getters.getUser;
   },
-  created() {
-    this.user = this.$store.state.users.usersList.find(
+  async beforeMount() {
+    this.user = await this.$store.state.users.usersList.find(
       (user) => user.id.toString() === this.userId
     );
   },
