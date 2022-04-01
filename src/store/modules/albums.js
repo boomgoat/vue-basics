@@ -3,6 +3,7 @@ import axios from "axios";
 export const albums = {
   state: () => ({
     albumsList: [],
+    isLoading: false,
   }),
   getters: {
     getAlbums(state) {
@@ -12,11 +13,13 @@ export const albums = {
   mutations: {
     updateAlbums(state, payload) {
       state.albumsList = payload;
+      state.isLoading = false;
     },
   },
   actions: {
-    async fetchAlbums({ commit }, userId) {
+    async fetchAlbums({ state, commit }, userId) {
       try {
+        state.isLoading = true;
         const response = await axios.get(
           `https://jsonplaceholder.typicode.com/albums?user_id=${userId}?_limit=4`
         );

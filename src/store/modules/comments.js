@@ -3,6 +3,7 @@ import axios from "axios";
 export const comments = {
   state: () => ({
     commentsList: [],
+    isLoading: false,
   }),
   getters: {
     getComments(state) {
@@ -13,13 +14,13 @@ export const comments = {
     updateComments(state, payload) {
       payload.sort((a, b) => b.id - a.id);
       state.commentsList = payload;
-      console.log(payload);
+      state.isLoading = false;
     },
   },
   actions: {
-    async fetchComments({ commit }, postId) {
+    async fetchComments({ state, commit }, postId) {
       try {
-        console.log("called");
+        state.isLoading = true;
         const response = await axios.get(
           `https://jsonplaceholder.typicode.com/comments?postId=${postId}`
         );
@@ -30,6 +31,7 @@ export const comments = {
     },
     async addComment({ state, commit }, payload) {
       try {
+        state.isLoading = true;
         const { data } = await axios.post(
           `https://jsonplaceholder.typicode.com/comments`,
           payload

@@ -25,7 +25,6 @@ export default {
   },
   watch: {
     "$store.state.todos.todoList": function () {
-      console.log(this.$store.state.todos.todoList);
       this.todos = this.$store.state.todos.todoList;
     },
   },

@@ -4,10 +4,12 @@
     <div class="p-3">
       <b-form @submit.prevent="addComment">
         <b-input class="mb-2" placeholder="Add comment" v-model="newComment" />
-        <b-button variant="danger" type="submit">Post</b-button>
+        <b-button variant="danger" :disabled="isLoading" type="submit"
+          >Post</b-button
+        >
       </b-form>
     </div>
-    <div class="row p-1 mb-5" id="comment-section">
+    <div v-if="!isLoading" class="row p-1 mb-5" id="comment-section">
       <div class="pb-3" v-for="comment in comments" :key="comment.id">
         <basic-card
           maxWidth="80em"
@@ -15,6 +17,9 @@
           :cardSubTitle="comment.email"
         />
       </div>
+    </div>
+    <div v-else class="text-center">
+      <b-spinner></b-spinner>
     </div>
   </div>
   <div class="p-5" v-else>
@@ -32,6 +37,7 @@ export default {
     return {
       comments: [],
       newComment: "",
+      isLoading: false,
     };
   },
   methods: {
@@ -47,6 +53,9 @@ export default {
   watch: {
     "$store.state.comments.commentsList": function () {
       this.comments = this.$store.state.comments.commentsList;
+    },
+    "$store.state.comments.isLoading": function () {
+      this.isLoading = this.$store.state.comments.isLoading;
     },
   },
   mounted() {

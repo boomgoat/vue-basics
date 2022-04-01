@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!isLoading">
     <h3>Albums</h3>
     <div class="row overflow-hidden">
       <img
@@ -19,21 +19,29 @@
       />
     </div>
   </div>
+  <div v-else class="text-center p-5 m-5">
+    <b-spinner></b-spinner>
+  </div>
 </template>
 
 <script>
 import BasicCard from "./BasicCard.vue";
+
 export default {
   components: { BasicCard },
   data() {
     return {
       albums: [],
+      isLoading: false,
     };
   },
   props: ["userId"],
   watch: {
     "$store.state.albums.albumsList": function () {
       this.albums = this.$store.state.albums.albumsList;
+    },
+    "$store.state.albums.isLoading": function () {
+      this.isLoading = this.$store.state.albums.isLoading;
     },
   },
   methods: {
