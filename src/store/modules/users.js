@@ -2,16 +2,20 @@ import axios from "axios";
 
 export const users = {
   state: () => ({
-    usersList: [],
+    usersList: JSON.parse(localStorage.getItem("userList")) ?? [],
   }),
   getters: {
-    getUsers(state) {
+    getUsersList(state) {
       return state.usersList;
     },
   },
   mutations: {
     usersUpdated(state, payload) {
       state.usersList = payload;
+      localStorage.setItem("userList", JSON.stringify(payload));
+    },
+    currentUserUpdated(state, payload) {
+      state.currentUser = payload;
     },
   },
   actions: {
