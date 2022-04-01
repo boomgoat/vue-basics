@@ -54,12 +54,6 @@ export default {
     handleRowClick(user) {
       router.push(`users/${user.id}`);
     },
-    // searchUsers() {
-    //   this.users = this.$store.state.users.usersList.filter((user) => {
-    //     return user.name.toLowerCase().includes(this.searchText.toLowerCase());
-    //   });
-    //   console.log("called");
-    // },
   },
   watch: {
     "$store.state.users.usersList": function () {

@@ -9,6 +9,7 @@ const routes = [
     path: "/",
     name: "home",
     component: HomeView,
+    meta: { transition: "slide-right" },
   },
   {
     path: "/about",
@@ -23,7 +24,7 @@ const routes = [
     path: "/users",
     name: "users",
     component: () =>
-      import(/* webpackChunkName: "users" */ "../views/UsersView.vue"),
+      import(/* webpackChunkName: "users" */ "../views/UsersList.vue"),
   },
   {
     path: "/users/:id",
