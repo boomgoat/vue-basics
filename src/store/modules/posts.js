@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const posts = {
+  namespaced: true,
   state: () => ({
     postsList: [],
     isLoading: false,

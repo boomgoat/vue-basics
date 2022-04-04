@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const albums = {
+  namespaced: true,
   state: () => ({
     albumsList: [],
     isLoading: false,

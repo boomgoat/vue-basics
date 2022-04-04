@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const comments = {
+  namespaced: true,
   state: () => ({
     commentsList: [],
     isLoading: false,
@@ -8,6 +9,9 @@ export const comments = {
   getters: {
     getComments(state) {
       return state.commentsList;
+    },
+    getIsLoading(state) {
+      return state.isLoading;
     },
   },
   mutations: {

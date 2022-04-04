@@ -12,6 +12,7 @@
 import UserAlbums from "@/components/UserAlbums.vue";
 import UserComments from "@/components/UserComments.vue";
 import UserPosts from "@/components/UserPosts.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: { UserAlbums, UserComments, UserPosts },
@@ -31,12 +32,12 @@ export default {
     },
   },
   mounted() {
-    this.user = this.$store.getters.getUser;
+    this.user = this.users.find((user) => user.id.toString() === this.userId);
   },
-  async beforeMount() {
-    this.user = await this.$store.state.users.usersList.find(
-      (user) => user.id.toString() === this.userId
-    );
+  computed: {
+    ...mapGetters("users", {
+      users: "getUsersList",
+    }),
   },
 };
 </script>

@@ -1,12 +1,16 @@
 import axios from "axios";
 
 export const users = {
+  namespaced: true,
   state: () => ({
     usersList: JSON.parse(localStorage.getItem("userList")) ?? [],
   }),
   getters: {
     getUsersList(state) {
       return state.usersList;
+    },
+    getUser: (state) => (userID) => {
+      return state.userList.find((user) => user.id.toString() === userID);
     },
   },
   mutations: {

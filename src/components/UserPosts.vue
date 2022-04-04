@@ -46,7 +46,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("fetchPosts", this.userId);
+    this.$store.dispatch("posts/fetchPosts", this.userId);
   },
 };
 </script>

@@ -22,22 +22,19 @@
       <b-spinner></b-spinner>
     </div>
   </div>
-  <div class="p-5" v-else>
-    <h4>Select post to view comments</h4>
-  </div>
+  <div v-else></div>
 </template>
 
 <script>
 import BasicCard from "@/components/BasicCard.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: { BasicCard },
   props: ["postId", "userEmail"],
   data() {
     return {
-      comments: [],
       newComment: "",
-      isLoading: false,
     };
   },
   methods: {
@@ -47,21 +44,18 @@ export default {
         email: this.userEmail,
         postId: this.postId,
       };
-      this.$store.dispatch("addComment", payload);
+      this.$store.dispatch("comments/addComment", payload);
     },
   },
-  watch: {
-    "$store.state.comments.commentsList": function () {
-      this.comments = this.$store.state.comments.commentsList;
-    },
-    "$store.state.comments.isLoading": function () {
-      this.isLoading = this.$store.state.comments.isLoading;
-    },
+  computed: {
+    ...mapGetters("comments", {
+      isLoading: "getIsLoading",
+      comments: "getComments",
+    }),
   },
   mounted() {
-    this.$store.dispatch("fetchComments", this.postId);
+    this.$store.dispatch("comments/fetchComments", this.postId);
   },
-  updated() {},
 };
 </script>
 

@@ -66,7 +66,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("fetchUsers");
+    this.$store.dispatch("users/fetchUsers");
     this.users = this.$store.state.users.usersList;
   },
   computed: {

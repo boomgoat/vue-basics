@@ -59,7 +59,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("fetchAlbums", this.userId);
+    this.$store.dispatch("albums/fetchAlbums", this.userId);
   },
 };
 </script>
