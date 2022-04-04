@@ -3,10 +3,20 @@
     <h3 class="p-4">Comments</h3>
     <div class="p-3">
       <b-form @submit.prevent="addComment">
-        <b-input class="mb-2" placeholder="Add comment" v-model="newComment" />
-        <b-button variant="danger" :disabled="isLoading" type="submit"
-          >Post</b-button
-        >
+        <validation-provider rules="required" v-slot="{ errors, invalid }">
+          <b-input
+            class="mb-2"
+            placeholder="Add comment"
+            v-model="newComment"
+          />
+          <span>{{ errors[0] }}</span>
+          <b-button
+            variant="danger"
+            :disabled="isLoading || invalid"
+            type="submit"
+            >Post</b-button
+          >
+        </validation-provider>
       </b-form>
     </div>
     <div v-if="!isLoading" class="row p-1 mb-5" id="comment-section">
@@ -28,9 +38,18 @@
 <script>
 import BasicCard from "@/components/BasicCard.vue";
 import { mapGetters } from "vuex";
+import { extend, ValidationProvider } from "vee-validate";
+
+extend("required", {
+  validate(value) {
+    return value ? true : "This field is required";
+  },
+  // This rule reports the `required` state of the field.
+  computesRequired: true,
+});
 
 export default {
-  components: { BasicCard },
+  components: { BasicCard, ValidationProvider },
   props: ["postId", "userEmail"],
   data() {
     return {
@@ -45,6 +64,9 @@ export default {
         postId: this.postId,
       };
       this.$store.dispatch("comments/addComment", payload);
+    },
+    validate(value) {
+      return value ? true : "This field is required";
     },
   },
   computed: {
