@@ -1,33 +1,33 @@
 import axios from "axios";
 
-export const albums = {
+export const photos = {
   namespaced: true,
   state: () => ({
-    albumsList: [],
+    photosList: [],
     isLoading: false,
   }),
   getters: {
-    getAlbumsList(state) {
-      return state.albumsList;
+    getPhotos(state) {
+      return state.photosList;
     },
     getIsLoading(state) {
       return state.isLoading;
     },
   },
   mutations: {
-    updateAlbums(state, payload) {
-      state.albumsList = payload;
+    updatePhotos(state, payload) {
+      state.photosList = payload;
       state.isLoading = false;
     },
   },
   actions: {
-    async fetchAlbums({ state, commit }, userId) {
+    async fetchPhotos({ state, commit }, albumId) {
       try {
         state.isLoading = true;
         const response = await axios.get(
-          `https://jsonplaceholder.typicode.com/albums?user_id=${userId}?_limit=4`
+          `https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`
         );
-        commit("updateAlbums", response.data);
+        commit("updatePhotos", response.data);
       } catch (error) {
         console.error(error);
       }

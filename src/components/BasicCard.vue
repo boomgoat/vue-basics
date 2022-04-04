@@ -10,9 +10,12 @@
       {{ cardContent }}
     </b-card-text>
 
-    <b-button @click="$emit('button-click')" variant="primary">{{
-      buttonContent
-    }}</b-button>
+    <b-button
+      :class="buttonClasses"
+      @click="$emit('button-click')"
+      variant="primary"
+      >{{ buttonContent }}</b-button
+    >
   </b-card>
 </template>
 
@@ -39,8 +42,16 @@ export default {
     buttonContent: {
       default: "Click Here",
     },
+
+    buttonClasses: {
+      default: null,
+    },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.hidden {
+  display: none;
+}
+</style>

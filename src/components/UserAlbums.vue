@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoading">
+  <div v-if="!isLoading && albums">
     <h3>Albums</h3>
     <div class="row overflow-hidden">
       <img
@@ -8,8 +8,13 @@
         src="../assets/next.png"
       />
       <div ref="albumRow" class="d-flex album-container overflow-auto p-1">
-        <div class="col-3" v-for="album in albums" :key="album.id">
-          <basic-card :card-title="album.title" />
+        <div class="col-3 text-center" v-for="album in albums" :key="album.id">
+          <basic-card buttonClasses="hidden" :card-title="album.title" />
+
+          <div>
+            <b-button v-b-modal="album.id.toString()">View Album</b-button>
+            <album-modal :id="album.id.toString()" />
+          </div>
         </div>
       </div>
       <img
@@ -25,24 +30,26 @@
 </template>
 
 <script>
+import AlbumModal from "./PhotosModal.vue";
 import BasicCard from "./BasicCard.vue";
+import { mapGetters } from "vuex";
 
 export default {
-  components: { BasicCard },
+  components: { BasicCard, AlbumModal },
   data() {
     return {
-      albums: [],
-      isLoading: false,
+      // albums: [],
+      // isLoading: false,
     };
   },
   props: ["userId"],
   watch: {
-    "$store.state.albums.albumsList": function () {
-      this.albums = this.$store.state.albums.albumsList;
-    },
-    "$store.state.albums.isLoading": function () {
-      this.isLoading = this.$store.state.albums.isLoading;
-    },
+    // "$store.state.albums.albumsList": function () {
+    //   this.albums = this.$store.state.albums.albumsList;
+    // },
+    // "$store.state.albums.isLoading": function () {
+    //   this.isLoading = this.$store.state.albums.isLoading;
+    // },
   },
   methods: {
     scrollRight() {
@@ -60,6 +67,12 @@ export default {
   },
   created() {
     this.$store.dispatch("albums/fetchAlbums", this.userId);
+  },
+  computed: {
+    ...mapGetters("albums", {
+      isLoading: "getIsLoading",
+      albums: "getAlbumsList",
+    }),
   },
 };
 </script>
