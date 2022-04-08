@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <app-header />
+    <!-- using the line below to check for content updates -->
+    <h4>Test 46</h4>
     <router-view v-slot="{ Component, route }">
       <transition name="fade" mode="out-in">
         <component :is="Component" :key="route.path" />
